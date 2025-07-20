@@ -21,40 +21,94 @@ $admin = getLoggedAdmin();
     <title>Gestion des Salles - SmartAccess UCB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
         }
+        
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body { 
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .navbar {
+            background: var(--md-sys-color-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+        
         .content-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: var(--md-sys-color-surface);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            border: 1px solid var(--md-sys-color-outline);
             overflow: hidden;
         }
+        
         .content-card .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border: none;
             padding: 1rem 1.5rem;
         }
+        
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
             border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
         }
+        
         .btn-primary:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            background: color-mix(in srgb, var(--md-sys-color-primary) 85%, black);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
         }
+        
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .alert-success {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+        
+        .alert-danger {
+            background: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+        }
+        
         .loading-spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid color-mix(in srgb, currentColor 30%, transparent);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: currentColor;
             animation: spin 1s ease-in-out infinite;
         }
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -135,7 +189,7 @@ $admin = getLoggedAdmin();
                 <div class="content-card">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <i class="bi bi-building-add me-2"></i>
+                            <span class="material-icons me-2">add_business</span>
                             {{ editingSalle ? 'Modifier Salle' : 'Ajouter Salle' }}
                         </h5>
                     </div>
@@ -181,14 +235,14 @@ $admin = getLoggedAdmin();
                                         class="btn btn-primary"
                                         :disabled="loading">
                                     <span v-if="loading" class="loading-spinner me-2"></span>
-                                    <i v-else class="bi bi-check-lg me-2"></i>
+                                    <span v-else class="material-icons me-2">check</span>
                                     {{ editingSalle ? 'Mettre à jour' : 'Ajouter' }}
                                 </button>
                                 <button type="button" 
                                         class="btn btn-secondary"
                                         @click="resetForm"
                                         v-if="editingSalle">
-                                    <i class="bi bi-x-lg me-2"></i>
+                                    <span class="material-icons me-2">close</span>
                                     Annuler
                                 </button>
                             </div>
@@ -202,11 +256,11 @@ $admin = getLoggedAdmin();
                 <div class="content-card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            <i class="bi bi-building me-2"></i>
+                            <span class="material-icons me-2">business</span>
                             Liste des Salles ({{ salles.length }})
                         </h5>
                         <button class="btn btn-light btn-sm" @click="loadSalles">
-                            <i class="bi bi-arrow-clockwise"></i>
+                            <span class="material-icons">refresh</span>
                         </button>
                     </div>
                     <div class="card-body">
@@ -214,7 +268,7 @@ $admin = getLoggedAdmin();
                         <div class="mb-3">
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="bi bi-search"></i>
+                                    <span class="material-icons">search</span>
                                 </span>
                                 <input type="text" 
                                        class="form-control" 
@@ -301,15 +355,15 @@ $admin = getLoggedAdmin();
         </div>
 
         <!-- Alertes -->
-        <transition name="fade">
-            <div v-if="alert.show" 
-                 :class="['alert', 'alert-' + alert.type, 'alert-dismissible', 'fade', 'show']" 
-                 role="alert">
-                <i :class="['bi', alert.type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle', 'me-2']"></i>
-                {{ alert.message }}
-                <button type="button" class="btn-close" @click="hideAlert"></button>
-            </div>
-        </transition>
+        <div v-if="alert.show" 
+             :class="['alert', 'alert-' + alert.type, 'alert-dismissible']" 
+             role="alert">
+            <span :class="['material-icons', 'me-2']">
+                {{ alert.type === 'success' ? 'check_circle' : 'warning' }}
+            </span>
+            {{ alert.message }}
+            <button type="button" class="btn-close" @click="hideAlert" aria-label="Close"></button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

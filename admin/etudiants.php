@@ -21,51 +21,179 @@ $admin = getLoggedAdmin();
     <title>Gestion des Étudiants - SmartAccess UCB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-on-error: #FFFFFF;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
         }
+        
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body { 
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .navbar {
+            background: var(--md-sys-color-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+        
         .content-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: var(--md-sys-color-surface);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            border: 1px solid var(--md-sys-color-outline);
             overflow: hidden;
         }
+        
         .content-card .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border: none;
             padding: 1rem 1.5rem;
         }
+        
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
             border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
+            text-transform: none;
+            transition: all 0.2s ease;
         }
+        
         .btn-primary:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            background: color-mix(in srgb, var(--md-sys-color-primary) 85%, black);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
         }
+        
+        .btn-secondary {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary {
+            border: 1px solid var(--md-sys-color-primary);
+            color: var(--md-sys-color-primary);
+            background: transparent;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-danger {
+            border: 1px solid var(--md-sys-color-error);
+            color: var(--md-sys-color-error);
+            background: transparent;
+            border-radius: 20px;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            padding: 16px 12px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+        }
+        
+        .form-label {
+            color: var(--md-sys-color-on-surface-variant);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
         .table-hover tbody tr:hover {
-            background-color: rgba(102, 126, 234, 0.05);
+            background-color: var(--md-sys-color-surface-variant);
         }
+        
+        .badge {
+            border-radius: 16px;
+            padding: 4px 12px;
+            font-weight: 500;
+        }
+        
+        .badge.bg-primary {
+            background: var(--md-sys-color-primary) !important;
+            color: var(--md-sys-color-on-primary);
+        }
+        
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .alert-success {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+        
+        .alert-danger {
+            background: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+        }
+        
+        .alert-warning {
+            background: #FFF8E1;
+            color: #E65100;
+        }
+        
         .loading-spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid color-mix(in srgb, currentColor 30%, transparent);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: currentColor;
             animation: spin 1s ease-in-out infinite;
         }
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        .fade-enter-active, .fade-leave-active {
-            transition: opacity 0.5s;
+        
+        .material-icons {
+            vertical-align: middle;
+            margin-right: 8px;
         }
-        .fade-enter, .fade-leave-to {
-            opacity: 0;
+        
+        .input-group-text {
+            background: var(--md-sys-color-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface-variant);
         }
     </style>
 </head>
@@ -155,7 +283,7 @@ $admin = getLoggedAdmin();
                                             @click="importFromUCB"
                                             :disabled="loading || !form.matricule">
                                         <span v-if="loading" class="loading-spinner"></span>
-                                        <i v-else class="bi bi-download"></i>
+                                        <span v-else class="material-icons">download</span>
                                         Importer UCB
                                     </button>
                                 </div>
@@ -208,14 +336,14 @@ $admin = getLoggedAdmin();
                                         class="btn btn-primary"
                                         :disabled="loading">
                                     <span v-if="loading" class="loading-spinner me-2"></span>
-                                    <i v-else class="bi bi-check-lg me-2"></i>
+                                    <span v-else class="material-icons">check</span>
                                     {{ editingStudent ? 'Mettre à jour' : 'Ajouter' }}
                                 </button>
                                 <button type="button" 
                                         class="btn btn-secondary"
                                         @click="resetForm"
                                         v-if="editingStudent">
-                                    <i class="bi bi-x-lg me-2"></i>
+                                    <span class="material-icons">close</span>
                                     Annuler
                                 </button>
                             </div>
@@ -229,11 +357,11 @@ $admin = getLoggedAdmin();
                 <div class="content-card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            <i class="bi bi-people me-2"></i>
+                            <span class="material-icons">people</span>
                             Liste des Étudiants ({{ students.length }})
                         </h5>
                         <button class="btn btn-light btn-sm" @click="loadStudents">
-                            <i class="bi bi-arrow-clockwise"></i>
+                            <span class="material-icons">refresh</span>
                         </button>
                     </div>
                     <div class="card-body p-0">
@@ -241,7 +369,7 @@ $admin = getLoggedAdmin();
                         <div class="p-3 border-bottom">
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="bi bi-search"></i>
+                                    <span class="material-icons">search</span>
                                 </span>
                                 <input type="text" 
                                        class="form-control" 
@@ -298,12 +426,12 @@ $admin = getLoggedAdmin();
                                                 <button class="btn btn-outline-primary" 
                                                         @click="editStudent(student)"
                                                         title="Modifier">
-                                                    <i class="bi bi-pencil"></i>
+                                                    <span class="material-icons">edit</span>
                                                 </button>
                                                 <button class="btn btn-outline-danger" 
                                                         @click="deleteStudent(student)"
                                                         title="Supprimer">
-                                                    <i class="bi bi-trash"></i>
+                                                    <span class="material-icons">delete</span>
                                                 </button>
                                             </div>
                                         </td>
@@ -317,15 +445,15 @@ $admin = getLoggedAdmin();
         </div>
 
         <!-- Alertes -->
-        <transition name="fade">
-            <div v-if="alert.show" 
-                 :class="['alert', 'alert-' + alert.type, 'alert-dismissible', 'fade', 'show']" 
-                 role="alert">
-                <i :class="['bi', alert.type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle', 'me-2']"></i>
-                {{ alert.message }}
-                <button type="button" class="btn-close" @click="hideAlert"></button>
-            </div>
-        </transition>
+        <div v-if="alert.show" 
+             :class="['alert', 'alert-' + alert.type, 'alert-dismissible']" 
+             role="alert">
+            <span :class="['material-icons', 'me-2']">
+                {{ alert.type === 'success' ? 'check_circle' : 'warning' }}
+            </span>
+            {{ alert.message }}
+            <button type="button" class="btn-close" @click="hideAlert" aria-label="Close"></button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -391,16 +519,20 @@ $admin = getLoggedAdmin();
                         const response = await fetch(`https://akhademie.ucbukavu.ac.cd/api/v1/school-students/read-by-matricule?matricule=${this.form.matricule}`);
                         const data = await response.json();
                         
-                        if (data && data.data) {
+                        console.log('Réponse API UCB:', data); // Debug
+                        
+                        if (data && data.data && data.message === "Request was successful") {
                             const student = data.data;
-                            this.form.nom = student.lastname || '';
-                            this.form.prenom = student.firstname || '';
+                            this.form.nom = student.lastname || student.nom || '';
+                            this.form.prenom = student.firstname || student.prenom || '';
                             this.form.email = student.email || '';
-                            this.form.faculte = student.faculte || '';
-                            this.form.promotion = student.promotion || '';
+                            // Pour faculté et promotion, on peut les laisser vides car elles ne sont pas dans cette API
+                            this.form.faculte = '';
+                            this.form.promotion = '';
                             
                             this.showAlert('success', 'Données importées avec succès depuis UCB');
                         } else {
+                            console.log('Données non trouvées:', data);
                             this.showAlert('warning', 'Aucun étudiant trouvé avec ce matricule dans la base UCB');
                         }
                     } catch (error) {

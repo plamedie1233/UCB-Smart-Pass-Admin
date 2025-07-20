@@ -51,30 +51,58 @@ $admin = getLoggedAdmin();
     <title>Tableau de Bord - SmartAccess UCB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+        }
+        
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        
         body {
-            background-color: #f8f9fa;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
+        
         .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--md-sys-color-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         }
+        
         .stat-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--md-sys-color-surface);
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            border: 1px solid var(--md-sys-color-outline);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-left: 4px solid;
         }
+        
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .stat-card.primary { border-left-color: #667eea; }
-        .stat-card.success { border-left-color: #28a745; }
-        .stat-card.warning { border-left-color: #ffc107; }
-        .stat-card.info { border-left-color: #17a2b8; }
+        
+        .stat-card.primary { border-left-color: var(--md-sys-color-primary); }
+        .stat-card.success { border-left-color: #4CAF50; }
+        .stat-card.warning { border-left-color: #FF9800; }
+        .stat-card.info { border-left-color: #2196F3; }
         
         .stat-icon {
             width: 60px;
@@ -84,34 +112,39 @@ $admin = getLoggedAdmin();
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: white;
+            color: var(--md-sys-color-on-primary);
         }
-        .icon-primary { background: linear-gradient(135deg, #667eea, #764ba2); }
-        .icon-success { background: linear-gradient(135deg, #28a745, #20c997); }
-        .icon-warning { background: linear-gradient(135deg, #ffc107, #fd7e14); }
-        .icon-info { background: linear-gradient(135deg, #17a2b8, #6f42c1); }
+        
+        .icon-primary { background: var(--md-sys-color-primary); }
+        .icon-success { background: #4CAF50; }
+        .icon-warning { background: #FF9800; }
+        .icon-info { background: #2196F3; }
         
         .content-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: var(--md-sys-color-surface);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            border: 1px solid var(--md-sys-color-outline);
             overflow: hidden;
         }
+        
         .content-card .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border: none;
             padding: 1rem 1.5rem;
         }
+        
         .quick-action-btn {
-            border-radius: 10px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
+        
         .quick-action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
     </style>
 </head>
