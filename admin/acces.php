@@ -629,14 +629,20 @@ $admin = getLoggedAdmin();
                         if (data && data.data && data.data.entities && data.message === "Request was successful") {
                             this.facultes = data.data.entities.map(entity => ({
                                 id: entity.id,
-                                name: entity.label || entity.title
+                                name: entity.label || entity.title,
+                                title: entity.title
                             }));
                             
                             this.promotions = data.data.promotions.map(promotion => ({
                                 id: promotion.id,
                                 name: promotion.label || promotion.title,
-                                entity_name: this.getEntityNameById(promotion.entityId)
+                                title: promotion.title,
+                                entityId: promotion.entityId,
+                                level: promotion.level
                             }));
+                            
+                            console.log('Facultés chargées:', this.facultes);
+                            console.log('Promotions chargées:', this.promotions);
                             
                             this.showAlert('success', 'Données UCB chargées avec succès');
                         } else {
@@ -651,10 +657,6 @@ $admin = getLoggedAdmin();
                     }
                 },
 
-                getEntityNameById(entityId) {
-                    const entity = this.facultes.find(f => f.id === entityId);
-                    return entity ? entity.name : '';
-                },
 
                 loadPromotions() {
                     if (this.groupForm.faculte) {
@@ -662,8 +664,9 @@ $admin = getLoggedAdmin();
                         const selectedFaculte = this.facultes.find(f => f.name === this.groupForm.faculte);
                         if (selectedFaculte) {
                             this.filteredPromotions = this.promotions.filter(promotion => 
-                                promotion.entity_name === selectedFaculte.name
+                                promotion.entityId === selectedFaculte.id
                             );
+                            console.log('Promotions filtrées pour', selectedFaculte.name, ':', this.filteredPromotions);
                         } else {
                             this.filteredPromotions = [];
                         }

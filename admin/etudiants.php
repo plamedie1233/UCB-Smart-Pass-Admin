@@ -526,9 +526,14 @@ $admin = getLoggedAdmin();
                             this.form.nom = student.lastname || student.nom || '';
                             this.form.prenom = student.firstname || student.prenom || '';
                             this.form.email = student.email || '';
-                            // Pour faculté et promotion, on peut les laisser vides car elles ne sont pas dans cette API
-                            this.form.faculte = '';
-                            this.form.promotion = '';
+                            
+                            // Récupérer faculté et promotion via entityId et promotionId
+                            if (student.entityId && student.promotionId) {
+                                await this.loadFaculteAndPromotion(student.entityId, student.promotionId);
+                            } else {
+                                this.form.faculte = '';
+                                this.form.promotion = '';
+                            }
                             
                             this.showAlert('success', 'Données importées avec succès depuis UCB');
                         } else {
@@ -543,6 +548,34 @@ $admin = getLoggedAdmin();
                     }
                 },
 
+                async loadFaculteAndPromotion(entityId, promotionId) {
+                    try {
+                        const response = await fetch('https://akhademie.ucbukavu.ac.cd/api/v1/school/entity-main-list?entity_id=undefined&promotion_id=1&traditional=undefined');
+                        const data = await response.json();
+                        
+                        console.log('Réponse API UCB facultés/promotions:', data); // Debug
+                        
+                        if (data && data.data && data.message === "Request was successful") {
+                            // Trouver la faculté par entityId
+                            const entity = data.data.entities.find(e => e.id === entityId);
+                            if (entity) {
+                                this.form.faculte = entity.label || entity.title;
+                            }
+                            
+                            // Trouver la promotion par promotionId
+                            const promotion = data.data.promotions.find(p => p.id === promotionId);
+                            if (promotion) {
+                                this.form.promotion = promotion.label || promotion.title;
+                            }
+                            
+                            console.log('Faculté trouvée:', this.form.faculte);
+                            console.log('Promotion trouvée:', this.form.promotion);
+                        }
+                    } catch (error) {
+                        console.error('Erreur chargement faculté/promotion:', error);
+                        // Ne pas afficher d'erreur car c'est optionnel
+                    }
+                },
                 async saveStudent() {
                     this.loading = true;
                     try {
