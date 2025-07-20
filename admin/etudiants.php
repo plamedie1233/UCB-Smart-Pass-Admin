@@ -391,10 +391,10 @@ $admin = getLoggedAdmin();
                         const response = await fetch(`https://akhademie.ucbukavu.ac.cd/api/v1/school-students/read-by-matricule?matricule=${this.form.matricule}`);
                         const data = await response.json();
                         
-                        if (data && data.student) {
-                            const student = data.student;
-                            this.form.nom = student.nom || '';
-                            this.form.prenom = student.prenom || '';
+                        if (data && data.data) {
+                            const student = data.data;
+                            this.form.nom = student.lastname || '';
+                            this.form.prenom = student.firstname || '';
                             this.form.email = student.email || '';
                             this.form.faculte = student.faculte || '';
                             this.form.promotion = student.promotion || '';

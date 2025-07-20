@@ -559,11 +559,18 @@ $admin = getLoggedAdmin();
                         const response = await fetch('https://akhademie.ucbukavu.ac.cd/api/v1/school/entity-main-list?entity_id=undefined&promotion_id=1&traditional=undefined');
                         const data = await response.json();
                         
-                        if (data && data.entities) {
-                            this.facultes = data.entities;
+                        if (data && data.data && data.data.entities) {
+                            this.facultes = data.data.entities.map(entity => ({
+                                id: entity.id,
+                                name: entity.label || entity.title
+                            }));
                         }
-                        if (data && data.promotions) {
-                            this.promotions = data.promotions;
+                        if (data && data.data && data.data.promotions) {
+                            this.promotions = data.data.promotions.map(promotion => ({
+                                id: promotion.id,
+                                name: promotion.label || promotion.title,
+                                entity_name: this.getEntityNameById(promotion.entityId)
+                            }));
                         }
                         
                         this.showAlert('success', 'Données UCB chargées avec succès');
@@ -575,12 +582,22 @@ $admin = getLoggedAdmin();
                     }
                 },
 
+                getEntityNameById(entityId) {
+                    const entity = this.facultes.find(f => f.id === entityId);
+                    return entity ? entity.name : '';
+                },
+
                 loadPromotions() {
                     if (this.groupForm.faculte) {
                         // Filtrer les promotions selon la faculté sélectionnée
-                        this.filteredPromotions = this.promotions.filter(promotion => 
-                            promotion.entity_name === this.groupForm.faculte
-                        );
+                        const selectedFaculte = this.facultes.find(f => f.name === this.groupForm.faculte);
+                        if (selectedFaculte) {
+                            this.filteredPromotions = this.promotions.filter(promotion => 
+                                promotion.entity_name === selectedFaculte.name
+                            );
+                        } else {
+                            this.filteredPromotions = [];
+                        }
                     } else {
                         this.filteredPromotions = [];
                     }
