@@ -95,7 +95,7 @@ function handleCreateStudent() {
     
     // Validation du format du matricule
     if (!isValidMatricule($input['matricule'])) {
-        throw new Exception('Format de matricule invalide. Format attendu: XX/YY/ZZZ');
+        throw new Exception('Format de matricule invalide. Format attendu: XX/YY.ZZZZZ');
     }
     
     // Vérification de l'unicité du matricule

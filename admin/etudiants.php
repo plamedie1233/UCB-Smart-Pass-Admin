@@ -147,8 +147,8 @@ $admin = getLoggedAdmin();
                                     <input type="text" 
                                            class="form-control" 
                                            v-model="form.matricule"
-                                           placeholder="Ex: 05/23/001"
-                                           pattern="^\d{2}/\d{2}/\d{3}$"
+                                           placeholder="Ex: 05/23.09319"
+                                           pattern="^\d{2}/\d{2}\.\d{5}$"
                                            required>
                                     <button type="button" 
                                             class="btn btn-outline-primary" 
@@ -160,7 +160,7 @@ $admin = getLoggedAdmin();
                                     </button>
                                 </div>
                                 <small class="form-text text-muted">
-                                    Format: XX/YY/ZZZ (ex: 05/23/001)
+                                    Format: XX/YY.ZZZZZ (ex: 05/23.09319)
                                 </small>
                             </div>
 

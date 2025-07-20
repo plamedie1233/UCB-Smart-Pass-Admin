@@ -18,6 +18,7 @@ SmartAccess UCB est un système complet de gestion d'accès aux salles pour les 
 - Import automatique depuis l'API UCB par matricule
 - Recherche et filtrage en temps réel
 - Validation des matricules (format XX/YY/ZZZ)
+ Validation des matricules (format XX/YY.ZZZZZ)
 
 ### 🏢 Gestion des Salles
 - Interface Vue.js pour la gestion des salles
@@ -127,8 +128,7 @@ GET /api/verifier_acces.php?matricule=XXX&salle_id=YYY
     "status": "ACCES AUTORISE",
     "etudiant": "MUKAMBA Jean",
     "salle": "Salle Informatique A",
-    "niveau": "LECTURE",
-    "matricule": "05/23/001",
+    "matricule": "05/23.09319",
     "salle_id": 1,
     "timestamp": "2024-01-15 10:30:00"
 }
@@ -139,7 +139,7 @@ GET /api/verifier_acces.php?matricule=XXX&salle_id=YYY
 {
     "status": "ACCES REFUSE",
     "message": "Aucune autorisation valide trouvée",
-    "matricule": "05/23/999",
+    "matricule": "05/23.99999",
     "salle_id": 1,
     "timestamp": "2024-01-15 10:30:00"
 }
@@ -149,7 +149,7 @@ GET /api/verifier_acces.php?matricule=XXX&salle_id=YYY
 
 ### Import Étudiant
 ```
-GET https://akhademie.ucbukavu.ac.cd/api/v1/school-students/read-by-matricule?matricule=XXX
+GET https://akhademie.ucbukavu.ac.cd/api/v1/school-students/read-by-matricule?matricule=05/23.09319
 ```
 
 ### Liste Facultés/Promotions

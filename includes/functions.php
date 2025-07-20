@@ -159,17 +159,16 @@ function getAutorisations() {
  * @return int
  */
 function addAutorisation($data) {
-    $query = "INSERT INTO autorisations (etudiant_id, salle_id, niveau_acces, date_debut, date_fin) 
-              VALUES (?, ?, ?, ?, ?)";
+    $query = "INSERT INTO autorisations (etudiant_id, salle_id, date_debut, date_fin) 
+              VALUES (?, ?, ?, ?)";
     $params = [
         $data['etudiant_id'],
         $data['salle_id'],
-        $data['niveau_acces'] ?? 'LECTURE',
         $data['date_debut'],
         $data['date_fin']
     ];
     
-    executeQuery($query, $params, 'iisss');
+    executeQuery($query, $params, 'iiss');
     return getLastInsertId();
 }
 
@@ -205,7 +204,6 @@ function addAutorisationGroupee($faculte, $promotion, $salle_id, $date_debut, $d
             addAutorisation([
                 'etudiant_id' => $etudiant['id'],
                 'salle_id' => $salle_id,
-                'niveau_acces' => 'LECTURE',
                 'date_debut' => $date_debut,
                 'date_fin' => $date_fin
             ]);
@@ -245,8 +243,7 @@ function verifierAcces($matricule, $salle_id) {
         return [
             'status' => 'ACCES AUTORISE',
             'etudiant' => $autorisation['nom'] . ' ' . $autorisation['prenom'],
-            'salle' => $autorisation['nom_salle'],
-            'niveau' => $autorisation['niveau_acces']
+            'salle' => $autorisation['nom_salle']
         ];
     } else {
         // Tenter de trouver l'étudiant pour l'historique
@@ -326,6 +323,6 @@ function formatDate($date) {
  * @return bool
  */
 function isValidMatricule($matricule) {
-    // Format attendu: XX/YY/ZZZ (ex: 05/23/001)
-    return preg_match('/^\d{2}\/\d{2}\/\d{3}$/', $matricule);
+    // Format attendu: XX/YY.ZZZZZ (ex: 05/23.09319)
+    return preg_match('/^\d{2}\/\d{2}\.\d{5}$/', $matricule);
 }

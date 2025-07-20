@@ -205,15 +205,6 @@ $admin = getLoggedAdmin();
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label">Niveau d'accès</label>
-                                            <select class="form-select" v-model="individualForm.niveau_acces">
-                                                <option value="LECTURE">Lecture</option>
-                                                <option value="ECRITURE">Écriture</option>
-                                                <option value="ADMIN">Administrateur</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Date de début</label>
@@ -389,7 +380,6 @@ $admin = getLoggedAdmin();
                                             <th>Étudiant</th>
                                             <th>Matricule</th>
                                             <th>Salle</th>
-                                            <th>Niveau</th>
                                             <th>Période</th>
                                             <th>Statut</th>
                                             <th>Actions</th>
@@ -397,13 +387,13 @@ $admin = getLoggedAdmin();
                                     </thead>
                                     <tbody>
                                         <tr v-if="loading && autorisations.length === 0">
-                                            <td colspan="7" class="text-center py-4">
+                                            <td colspan="6" class="text-center py-4">
                                                 <div class="loading-spinner me-2"></div>
                                                 Chargement des autorisations...
                                             </td>
                                         </tr>
                                         <tr v-else-if="filteredAutorisations.length === 0">
-                                            <td colspan="7" class="text-center py-4 text-muted">
+                                            <td colspan="6" class="text-center py-4 text-muted">
                                                 <i class="bi bi-inbox fs-1 mb-3"></i>
                                                 <p>Aucune autorisation trouvée.</p>
                                             </td>
@@ -423,11 +413,6 @@ $admin = getLoggedAdmin();
                                                 <span class="badge bg-primary">{{ auth.matricule }}</span>
                                             </td>
                                             <td>{{ auth.nom_salle }}</td>
-                                            <td>
-                                                <span :class="['badge', getBadgeClass(auth.niveau_acces)]">
-                                                    {{ auth.niveau_acces }}
-                                                </span>
-                                            </td>
                                             <td>
                                                 <small>
                                                     Du {{ formatDate(auth.date_debut) }}<br>
@@ -489,7 +474,6 @@ $admin = getLoggedAdmin();
                     individualForm: {
                         etudiant_id: '',
                         salle_id: '',
-                        niveau_acces: 'LECTURE',
                         date_debut: '',
                         date_fin: ''
                     },
@@ -733,7 +717,6 @@ $admin = getLoggedAdmin();
                     this.individualForm = {
                         etudiant_id: '',
                         salle_id: '',
-                        niveau_acces: 'LECTURE',
                         date_debut: '',
                         date_fin: ''
                     };
@@ -759,15 +742,6 @@ $admin = getLoggedAdmin();
                         hour: '2-digit',
                         minute: '2-digit'
                     });
-                },
-
-                getBadgeClass(niveau) {
-                    switch (niveau) {
-                        case 'LECTURE': return 'bg-info';
-                        case 'ECRITURE': return 'bg-warning';
-                        case 'ADMIN': return 'bg-danger';
-                        default: return 'bg-secondary';
-                    }
                 },
 
                 showAlert(type, message) {
