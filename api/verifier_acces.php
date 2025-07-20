@@ -42,7 +42,7 @@ try {
         http_response_code(400);
         echo json_encode([
             'status' => 'ACCES REFUSE',
-            'message' => 'Format de matricule invalide. Format attendu: XX/YY.ZZZZZ',
+            'message' => 'Format de matricule invalide. Format attendu: XX/YY/ZZZ',
             'matricule' => $matricule,
             'salle_id' => (int)$salle_id,
             'timestamp' => date('Y-m-d H:i:s')
